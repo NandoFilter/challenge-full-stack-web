@@ -1,6 +1,6 @@
 <template>
   <div class="main">
-    <div class="search">
+    <!-- <div class="search">
       <v-text-field
         v-model="text"
         class="search_field"
@@ -8,12 +8,18 @@
         label="Digite sua busca"
       />
       <v-btn class="search_btn" color="#005ba5"> Pesquisar </v-btn>
-    </div>
+    </div> -->
+    <RegisterForm />
   </div>
 </template>
 
 <script lang="ts">
+import RegisterForm from '@/components/RegisterForm.vue'
+
 export default {
+  components: {
+    RegisterForm,
+  },
   data() {
     return {
       text: ''
