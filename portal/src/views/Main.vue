@@ -7,12 +7,12 @@
       <div class="list">
         <v-list class="list_content">
           <v-subheader class="list_content_title">Módulo Acadêmico</v-subheader>
-          <v-list-item-group>
+          <v-list-item-group v-model="itemList">
             <v-list-item>
               <v-list-item-icon>
                 <font-awesome-icon icon="fa-solid fa-graduation-cap" />
               </v-list-item-icon>
-              <v-list-item-content class="v-item--active">
+              <v-list-item-content>
                 <v-list-item-title
                   selected
                   v-text="'Alunos'"
@@ -54,7 +54,8 @@ export default {
   },
   data() {
     return {
-      inQuery: false
+      inQuery: false,
+      itemList: 0
     }
   },
   computed: {
@@ -110,7 +111,7 @@ export default {
   border-right: #c4c4c4 solid 2px;
 
   &_content {
-    padding: 0;
+    padding: 0 !important;
     border-radius: 10px 0 0 0 !important;
 
     &_title {
@@ -121,7 +122,7 @@ export default {
       margin: 0;
       padding: 5px;
 
-      font-size: 13pt;
+      font-size: 13pt !important;
       font-weight: 600;
       color: #fff !important;
 

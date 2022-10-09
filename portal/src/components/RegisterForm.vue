@@ -5,6 +5,7 @@
       <v-text-field
         class="form_field"
         v-model="name"
+        :rules="[rules.required]"
         placeholder="Informe o nome completo"
       />
     </div>
@@ -13,6 +14,7 @@
       <v-text-field
         class="form_field"
         v-model="email"
+        :rules="[rules.required, rules.email]"
         placeholder="Informe apenas um e-mail"
       />
     </div>
@@ -21,6 +23,8 @@
       <v-text-field
         class="form_field"
         v-model="register"
+        required
+        :rules="[rules.required]"
         placeholder="Informe o registro acadêmico"
       />
     </div>
@@ -29,6 +33,8 @@
       <v-text-field
         class="form_field"
         v-model="cpf"
+        :rules="[rules.required]"
+        v-mask="'###.###.###-##'"
         placeholder="Informe o número do documento"
       />
     </div>
@@ -48,13 +54,25 @@ export default {
       name: '',
       email: '',
       register: '',
-      cpf: ''
+      cpf: '',
+      rules: {
+        required: (value: string) => !!value || 'Por favor, preencha o campo',
+        email: (value: string) => {
+          const pattern =
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          return pattern.test(value) || 'E-mail inválido'
+        }
+      }
     }
   }
 }
 </script>
 
 <style lang="scss">
+form {
+  margin-top: 25px;
+}
+
 .form {
   display: flex;
   justify-content: center;
@@ -81,6 +99,8 @@ export default {
   &_btns {
     display: flex;
     justify-content: right;
+
+    margin-top: 10px;
   }
 
   &_btn {

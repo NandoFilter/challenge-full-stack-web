@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
-import 'vuetify/dist/vuetify.min.css'
+import VueTheMask from 'vue-the-mask'
 import App from './App.vue'
 import router from './router'
 
+import 'vuetify/dist/vuetify.min.css'
 import '@mdi/font/css/materialdesignicons.css'
 
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -18,11 +19,12 @@ import {
 library.add(faMagnifyingGlass, faGraduationCap, faPen, faTrash)
 
 Vue.use(Vuetify)
+Vue.use(VueTheMask)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 export default new Vuetify({
   icons: {
-    iconfont: 'mdi' // default - only for display purposes
+    iconfont: 'mdi'
   }
 })
 
