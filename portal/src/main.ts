@@ -4,30 +4,29 @@ import 'vuetify/dist/vuetify.min.css'
 import App from './App.vue'
 import router from './router'
 
+import '@mdi/font/css/materialdesignicons.css'
+
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import {
   faMagnifyingGlass,
-  faGraduationCap
+  faGraduationCap,
+  faPen,
+  faTrash
 } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faMagnifyingGlass, faGraduationCap)
+library.add(faMagnifyingGlass, faGraduationCap, faPen, faTrash)
 
 Vue.use(Vuetify)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
-const opts = {
-  theme: {
-    dark: true,
-    themes: {
-      dark: {
-        primary: '#1c1c1c'
-      }
-    }
+export default new Vuetify({
+  icons: {
+    iconfont: 'mdi' // default - only for display purposes
   }
-}
+})
 
-const vuetify: Vuetify = new Vuetify(opts)
+const vuetify: Vuetify = new Vuetify()
 
 Vue.config.productionTip = false
 
