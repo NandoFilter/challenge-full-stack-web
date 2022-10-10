@@ -12,6 +12,15 @@ class StudentService {
 
     return []
   }
+
+  public async addStudent(student: Student) {
+    try {
+      const { data } = await axios.post('/student', student)
+      return data
+    } catch (error) {
+      console.error(error)
+    }
+  }
 }
 
 export default new StudentService()

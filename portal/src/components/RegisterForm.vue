@@ -1,5 +1,5 @@
 <template>
-  <form>
+  <v-form>
     <div class="form">
       <p class="form_text">Nome</p>
       <v-text-field
@@ -22,7 +22,7 @@
       <p class="form_text">RA</p>
       <v-text-field
         class="form_field"
-        v-model="register"
+        v-model="ra"
         required
         :rules="[rules.required]"
         placeholder="Informe o registro acadêmico"
@@ -39,21 +39,23 @@
       />
     </div>
     <div class="form_btns">
-      <v-btn class="form_btn" color="#006a74">Salvar</v-btn>
+      <v-btn class="form_btn" color="#006a74" @click="submit">Salvar</v-btn>
       <v-btn class="form_btn" color="#004b52" @click="$emit('cancel')"
         >Cancelar</v-btn
       >
     </div>
-  </form>
+  </v-form>
 </template>
 
 <script lang="ts">
+import StudentService from '@/services/studentService'
+
 export default {
   data() {
     return {
       name: '',
       email: '',
-      register: '',
+      ra: '',
       cpf: '',
       rules: {
         required: (value: string) => !!value || 'Por favor, preencha o campo',
@@ -63,6 +65,28 @@ export default {
           return pattern.test(value) || 'E-mail inválido'
         }
       }
+    }
+  },
+  methods: {
+    async submit() {
+      if (this.name && this.email && this.ra && this.cpf) {
+        const student = {
+          name: this.name,
+          email: this.email,
+          ra: Number(this.ra),
+          cpf: this.cpf
+        }
+
+        await StudentService.addStudent(student)
+
+        this.clearFields()
+      }
+    },
+    clearFields() {
+      this.name = ''
+      this.email = ''
+      this.ra = ''
+      this.cpf = ''
     }
   }
 }
