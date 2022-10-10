@@ -69,21 +69,22 @@
 </template>
 
 <script lang="ts">
-export default {
+import { defineComponent } from 'vue'
+import Student from '@/models/Student'
+import studentService from '@/services/studentService'
+
+export default defineComponent({
   data() {
     return {
       search: '',
       dialog: false,
       dialogDelete: false,
       editedIndex: -1,
-      students: [
-        { ra: '1', name: 'Fernando', cpf: '1' },
-        { ra: '2', name: 'João', cpf: '2' },
-        { ra: '3', name: 'Agatha', cpf: '3' },
-        { ra: '4', name: 'Valentina', cpf: '4' },
-        { ra: '5', name: 'Guilherme', cpf: '5' }
-      ]
+      students: [] as Student[]
     }
+  },
+  async created() {
+    this.students = await studentService.fetchStudents()
   },
   computed: {
     headers() {
@@ -104,12 +105,12 @@ export default {
     }
   },
   methods: {
-    editItem(item: any) {
+    editItem(item: Student) {
       this.editedIndex = this.students.indexOf(item)
       this.dialog = true
     },
 
-    deleteItem(item: any) {
+    deleteItem(item: Student) {
       this.editedIndex = this.students.indexOf(item)
       this.dialogDelete = true
     },
@@ -133,7 +134,7 @@ export default {
       })
     }
   }
-}
+})
 </script>
 
 <style lang="scss">
@@ -187,11 +188,11 @@ export default {
 
 .v-data-footer {
   &__pagination {
-    margin-left: 75%;
+    margin-left: 65% !important;
   }
 
   &__select {
-    display: none;
+    display: none !important;
   }
 }
 </style>

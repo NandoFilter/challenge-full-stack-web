@@ -54,7 +54,7 @@ export default {
   },
   data() {
     return {
-      inQuery: false,
+      inQuery: true,
       itemList: 0
     }
   },
@@ -92,8 +92,6 @@ export default {
 }
 
 .principal {
-  width: 100%;
-
   display: flex;
   align-items: left;
   justify-content: left;
