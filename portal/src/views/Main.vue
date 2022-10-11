@@ -8,7 +8,7 @@
         <v-list class="list_content">
           <v-subheader class="list_content_title">Módulo Acadêmico</v-subheader>
           <v-list-item-group v-model="itemList">
-            <v-list-item>
+            <v-list-item class="list_content_item">
               <v-list-item-icon>
                 <font-awesome-icon icon="fa-solid fa-graduation-cap" />
               </v-list-item-icon>
@@ -106,11 +106,11 @@ export default {
 }
 
 .header {
-  margin-right: 13%;
+  margin-right: 75%;
   margin-bottom: 10px;
 
   &_logo {
-    width: 20%;
+    width: 130px;
   }
 }
 
@@ -129,7 +129,7 @@ export default {
   height: 415px;
 
   border-radius: 10px 0 0 0;
-  border-right: #c4c4c4 solid 2px;
+  border-right: #006a74 solid 2px;
 
   &_content {
     padding: 0 !important;
@@ -148,7 +148,11 @@ export default {
       color: #fff !important;
 
       border-radius: 10px 0 0 0;
-      background-color: #bdbdbd;
+      background-color: #006a74;
+    }
+
+    &_item:hover {
+      color:#006a74 !important
     }
   }
 }
@@ -170,7 +174,8 @@ export default {
     margin-bottom: 10px;
 
     border-radius: 0 10px 0 0;
-    background-color: #ddd;
+    background-color: #008e9b;
+    color: #fff;
   }
 }
 
@@ -181,5 +186,9 @@ footer {
 .link {
   color: #000;
   text-decoration: none;
+}
+
+.link:hover {
+  color: #006a74
 }
 </style>

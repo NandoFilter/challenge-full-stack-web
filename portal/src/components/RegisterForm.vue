@@ -139,6 +139,8 @@ form {
   &_field {
     height: 60px;
     width: 300px;
+    
+    color: #006a74 !important;
   }
 
   &_btns {

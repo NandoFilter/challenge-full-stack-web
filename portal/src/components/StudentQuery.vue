@@ -160,9 +160,14 @@ export default defineComponent({
     }
 
     &_btn:hover {
+      color: #006a74 !important;
       cursor: pointer;
     }
   }
+}
+
+.delete:hover {
+  color: #ca0000 !important
 }
 
 .v-application--wrap {
