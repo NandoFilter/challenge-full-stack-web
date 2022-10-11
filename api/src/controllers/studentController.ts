@@ -11,6 +11,14 @@ class StudentController {
     });
   }
 
+  public getStudent(req: Request, res: Response) {
+    const { ra } = req.params;
+
+    StudentSchema.getStudent(ra, (results: Student) => {
+      res.json(results);
+    });
+  }
+
   public addStudent(req: Request, res: Response) {
     const { name, email, ra, cpf } = req.body as Student;
 
@@ -19,14 +27,6 @@ class StudentController {
     StudentSchema.addStudent(student);
 
     return res.json(student);
-  }
-
-  public deleteStudent(req: Request, res: Response) {
-    const { ra } = req.params;
-
-    StudentSchema.deleteStudent(ra);
-
-    return res.json("Success");
   }
 
   public updateStudent(req: Request, res: Response) {
@@ -38,6 +38,14 @@ class StudentController {
     StudentSchema.updateStudent(student, (results: Student[]) => {
       res.json(results);
     });
+  }
+
+  public deleteStudent(req: Request, res: Response) {
+    const { ra } = req.params;
+
+    StudentSchema.deleteStudent(ra);
+
+    return res.json("Success");
   }
 }
 

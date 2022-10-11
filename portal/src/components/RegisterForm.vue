@@ -23,7 +23,7 @@
       <v-text-field
         class="form_field"
         v-model="ra"
-        required
+        :disabled="isEdit"
         :rules="[rules.required]"
         placeholder="Informe o registro acadêmico"
       />
@@ -33,6 +33,7 @@
       <v-text-field
         class="form_field"
         v-model="cpf"
+        :disabled="isEdit"
         :rules="[rules.required]"
         v-mask="'###.###.###-##'"
         placeholder="Informe o número do documento"
@@ -49,8 +50,16 @@
 
 <script lang="ts">
 import StudentService from '@/services/studentService'
+import Student from '@/models/Student'
 
 export default {
+  props: {
+    student: Object as () => Student,
+    isEdit: {
+      type: Boolean,
+      required: true
+    }
+  },
   data() {
     return {
       name: '',
@@ -65,6 +74,18 @@ export default {
           return pattern.test(value) || 'E-mail inválido'
         }
       }
+    }
+  },
+  mounted() {
+    if (this.isEdit) {
+      if (this.student) {
+        this.name = this.student.name
+        this.email = this.student.email
+        this.ra = this.student.ra.toString()
+        this.cpf = this.student.cpf
+      }
+    } else {
+      this.clearFields()
     }
   },
   methods: {

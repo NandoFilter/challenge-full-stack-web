@@ -25,8 +25,17 @@
       <div class="center">
         <p class="center_title">{{ title }}</p>
         <div class="center_content">
-          <StudentQuery v-if="inQuery" @register="setQuery" />
-          <RegisterForm v-else @cancel="setQuery" />
+          <StudentQuery
+            v-if="inQuery"
+            @register="setQuery"
+            @editItem="setEdit"
+          />
+          <RegisterForm
+            v-else
+            :student="student"
+            :isEdit="isEdit"
+            @cancel="setQuery"
+          />
         </div>
       </div>
     </div>
@@ -46,6 +55,7 @@
 <script lang="ts">
 import StudentQuery from '@/components/StudentQuery.vue'
 import RegisterForm from '@/components/RegisterForm.vue'
+import StudentService from '@/services/studentService'
 
 export default {
   components: {
@@ -55,17 +65,30 @@ export default {
   data() {
     return {
       inQuery: true,
-      itemList: 0
+      isEdit: false,
+      itemList: 0,
+      student: null
     }
   },
   computed: {
     title(): string {
-      return this.inQuery ? 'Consulta de Alunos' : 'Cadastro de Alunos'
+      return this.inQuery
+        ? 'Consulta de Alunos'
+        : this.isEdit
+        ? 'Atualização de Aluno'
+        : 'Cadastro de Alunos'
     }
   },
   methods: {
     setQuery() {
       this.inQuery = !this.inQuery
+      this.isEdit = false
+    },
+    async setEdit(ra: number) {
+      this.inQuery = !this.inQuery
+      this.isEdit = true
+
+      this.student = await StudentService.getStudent(ra)
     }
   }
 }

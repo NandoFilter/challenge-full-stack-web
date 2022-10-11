@@ -16,20 +16,23 @@ class StudentSchema {
     conn.end();
   }
 
+  public getStudent(ra: string, callback: Function) {
+    const conn = database.getConnection();
+
+    conn.query(
+      `SELECT * FROM ${table} WHERE ra = ${ra}`,
+      (err: Error, results: Student[]) => {
+        if (err) throw err;
+
+        callback(results[0]);
+      }
+    );
+  }
+
   public addStudent(student: Student) {
     const conn = database.getConnection();
 
     conn.query(`INSERT INTO ${table} SET ?`, student, (err: Error) => {
-      if (err) throw err;
-    });
-
-    conn.end();
-  }
-
-  public deleteStudent(ra: string) {
-    const conn = database.getConnection();
-
-    conn.query(`DELETE FROM ${table} WHERE ra = ${ra}`, (err: Error) => {
       if (err) throw err;
     });
 
@@ -53,6 +56,16 @@ class StudentSchema {
         callback(results);
       }
     );
+
+    conn.end();
+  }
+
+  public deleteStudent(ra: string) {
+    const conn = database.getConnection();
+
+    conn.query(`DELETE FROM ${table} WHERE ra = ${ra}`, (err: Error) => {
+      if (err) throw err;
+    });
 
     conn.end();
   }

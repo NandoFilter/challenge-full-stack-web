@@ -53,7 +53,7 @@
               <font-awesome-icon
                 class="table_actions_btn edit"
                 icon="fa-solid fa-pen"
-                @click="editItem(item)"
+                @click="$emit('editItem', item.ra)"
               />
               <font-awesome-icon
                 class="table_actions_btn delete"
@@ -77,9 +77,8 @@ export default defineComponent({
   data() {
     return {
       search: '',
-      dialog: false,
       dialogDelete: false,
-      editedIndex: -1,
+      studentId: -1,
       students: [] as Student[]
     }
   },
@@ -97,41 +96,25 @@ export default defineComponent({
     }
   },
   watch: {
-    dialog(val) {
-      val || this.close()
-    },
-    dialogDelete(val) {
-      val || this.closeDelete()
+    dialogDelete(value) {
+      value || this.closeDelete()
     }
   },
   methods: {
-    editItem(item: Student) {
-      this.editedIndex = this.students.indexOf(item)
-      this.dialog = true
-    },
-
     deleteItem(item: Student) {
-      this.editedIndex = this.students.indexOf(item)
+      this.studentId = item.ra
+
+      studentService.deleteStudent(item.ra)
       this.dialogDelete = true
     },
-
     deleteItemConfirm() {
-      this.students.splice(this.editedIndex, 1)
+      const index = this.students.map((st) => st.ra).indexOf(this.studentId)
+
+      this.students.splice(index, 1)
       this.closeDelete()
     },
-
-    close() {
-      this.dialog = false
-      this.$nextTick(() => {
-        this.editedIndex = -1
-      })
-    },
-
     closeDelete() {
       this.dialogDelete = false
-      this.$nextTick(() => {
-        this.editedIndex = -1
-      })
     }
   }
 })
