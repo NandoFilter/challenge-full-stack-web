@@ -55,7 +55,7 @@
 <script lang="ts">
 import StudentQuery from '@/components/StudentQuery.vue'
 import RegisterForm from '@/components/RegisterForm.vue'
-import StudentService from '@/services/studentService'
+import Student from '@/models/Student'
 
 export default {
   components: {
@@ -67,7 +67,7 @@ export default {
       inQuery: true,
       isEdit: false,
       itemList: 0,
-      student: null
+      student: Object as unknown as Student
     }
   },
   computed: {
@@ -84,11 +84,13 @@ export default {
       this.inQuery = !this.inQuery
       this.isEdit = false
     },
-    async setEdit(ra: number) {
-      this.inQuery = !this.inQuery
-      this.isEdit = true
-
-      this.student = await StudentService.getStudent(ra)
+    setEdit(student: Student) {
+      if (student) {
+        this.inQuery = !this.inQuery
+        this.isEdit = true
+  
+        this.student = student;
+      }
     }
   }
 }

@@ -98,7 +98,11 @@ export default {
           cpf: this.cpf
         }
 
-        await StudentService.addStudent(student)
+        if (!this.isEdit) {
+          await StudentService.addStudent(student)
+        } else {
+          await StudentService.updateStudent(student)
+        }
 
         this.clearFields()
       }
@@ -139,7 +143,7 @@ form {
   &_field {
     height: 60px;
     width: 300px;
-    
+
     color: #006a74 !important;
   }
 

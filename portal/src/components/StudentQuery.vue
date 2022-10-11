@@ -53,7 +53,7 @@
               <font-awesome-icon
                 class="table_actions_btn edit"
                 icon="fa-solid fa-pen"
-                @click="$emit('editItem', item.ra)"
+                @click="$emit('editItem', item)"
               />
               <font-awesome-icon
                 class="table_actions_btn delete"
