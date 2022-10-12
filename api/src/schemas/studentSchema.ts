@@ -1,73 +1,94 @@
+import { QueryError } from 'mysql2'
 import database from '../database'
 import Student from '../models/student'
 
 const table = 'students'
 
 class StudentSchema {
+  /**
+   * getStudents
+   *
+   * @param callback Function
+   */
   public getStudents(callback: Function) {
     const conn = database.getConnection()
 
-    conn.query(`SELECT * FROM ${table}`, (err: Error, results: Student[]) => {
-      if (err) throw err
-
-      callback(results)
-    })
-
-    conn.end()
-  }
-
-  public getStudent(ra: string, callback: Function) {
-    const conn = database.getConnection()
-
-    conn.query(
-      `SELECT * FROM ${table} WHERE ra = ${ra}`,
-      (err: Error, results: Student[]) => {
+    if (conn) {
+      conn.query(`SELECT * FROM ${table}`, (err: Error, results: Student[]) => {
         if (err) throw err
 
-        callback(results[0])
-      }
-    )
+        callback(results)
+      })
+
+      conn.end()
+    }
   }
 
+  /**
+   * addStudent
+   *
+   * @param student Student
+   */
   public addStudent(student: Student) {
     const conn = database.getConnection()
 
-    conn.query(`INSERT INTO ${table} SET ?`, student, (err: Error) => {
-      if (err) throw err
-    })
+    if (conn) {
+      conn.query(
+        `INSERT INTO ${table} SET ?`,
+        student,
+        (err: QueryError | null) => {
+          if (err) throw err
+        }
+      )
 
-    conn.end()
+      conn.end()
+    }
   }
 
+  /**
+   * updateStudent
+   *
+   * @param student Student
+   * @param callback Function
+   */
   public updateStudent(student: Student, callback: Function) {
     const conn = database.getConnection()
 
     const { ra, name, email } = student
 
-    conn.query(
-      `UPDATE ${table} SET name = '${name}', email = '${email}' WHERE ra = ${ra}`
-    )
+    if (conn) {
+      conn.query(
+        `UPDATE ${table} SET name = '${name}', email = '${email}' WHERE ra = ${ra}`
+      )
 
-    conn.query(
-      `SELECT * FROM ${table} WHERE ra = ${ra}`,
-      (err: Error, results: Student[]) => {
-        if (err) throw err
+      conn.query(
+        `SELECT * FROM ${table} WHERE ra = ${ra}`,
+        (err: Error, results: Student[]) => {
+          if (err) throw err
 
-        callback(results)
-      }
-    )
+          callback(results)
+        }
+      )
 
-    conn.end()
+      conn.end()
+    }
   }
 
+  /**
+   * deleteStudent
+   *
+   * @param ra string
+   */
   public deleteStudent(ra: string) {
     const conn = database.getConnection()
 
-    conn.query(`DELETE FROM ${table} WHERE ra = ${ra}`, (err: Error) => {
-      if (err) throw err
-    })
+    if (conn) {
+      conn.query(`DELETE FROM ${table} WHERE ra = ${ra}`, (err: Error) => {
+        if (err) throw err
+      })
 
-    conn.end()
+      conn.end()
+    }
   }
 }
 

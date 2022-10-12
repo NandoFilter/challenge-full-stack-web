@@ -180,6 +180,10 @@ export default {
     },
     async validateCPF() {
       if (this.cpf.length === 14) {
+        if (this.isEdit) {
+          return true
+        }
+
         const students = await StudentService.fetchStudents()
 
         return students.map((st) => st.cpf).indexOf(this.cpf)
@@ -195,6 +199,10 @@ export default {
     },
     close() {
       this.dialog = false
+
+      if (this.isEdit) {
+        this.$emit('cancel')
+      }
     }
   }
 }

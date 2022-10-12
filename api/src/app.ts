@@ -7,6 +7,9 @@ import database from './database'
 class App {
   public express: express.Application
 
+  /**
+   * App
+   */
   constructor() {
     dotenv.config()
     database.createConnection()
@@ -14,6 +17,9 @@ class App {
     this.routes()
   }
 
+  /**
+   * routes
+   */
   private routes(): void {
     this.express.use(express.json())
     this.express.use(cors({ origin: '*' }))

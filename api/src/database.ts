@@ -1,13 +1,23 @@
+import Connection from 'mysql2/typings/mysql/lib/Connection'
+
 const mysql = require('mysql2')
 
 class Database {
-  conn: any
+  conn: Connection | undefined
 
+  /**
+   * Database
+   */
   constructor() {
     this.conn = this.createConnection()
   }
 
-  public createConnection() {
+  /**
+   * createConnection
+   *
+   * @returns Connection | undefined
+   */
+  public createConnection(): Connection | undefined {
     const host = process.env.DB_HOST
     const user = process.env.DB_USER
     const pass = process.env.DB_PASS
@@ -23,10 +33,17 @@ class Database {
     }
   }
 
-  public getConnection() {
+  /**
+   * getConnection
+   *
+   * @returns Connection | undefined
+   */
+  public getConnection(): Connection | undefined {
     this.conn = this.createConnection()
 
-    this.conn.connect()
+    if (this.conn) {
+      this.conn.connect()
+    }
 
     return this.conn
   }

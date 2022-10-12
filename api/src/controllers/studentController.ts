@@ -5,20 +5,24 @@ import StudentSchema from '../schemas/studentSchema'
 class StudentController {
   students: Student[] = []
 
+  /**
+   * fetchStudents
+   *
+   * @param req Request
+   * @param res Response
+   */
   public fetchStudents(req: Request, res: Response) {
     StudentSchema.getStudents((results: Student[]) => {
       res.json(results)
     })
   }
 
-  public getStudent(req: Request, res: Response) {
-    const { ra } = req.params
-
-    StudentSchema.getStudent(ra, (results: Student) => {
-      res.json(results)
-    })
-  }
-
+  /**
+   * addStudent
+   *
+   * @param req Request
+   * @param res Response
+   */
   public addStudent(req: Request, res: Response) {
     const { name, email, ra, cpf } = req.body as Student
 
@@ -29,6 +33,12 @@ class StudentController {
     return res.json(student)
   }
 
+  /**
+   * updateStudent
+   *
+   * @param req Request
+   * @param res Response
+   */
   public updateStudent(req: Request, res: Response) {
     const ra = Number(req.params.ra)
     const { name, email } = req.body
@@ -40,6 +50,12 @@ class StudentController {
     })
   }
 
+  /**
+   * deleteStudent
+   *
+   * @param req Request
+   * @param res Response
+   */
   public deleteStudent(req: Request, res: Response) {
     const { ra } = req.params
 
