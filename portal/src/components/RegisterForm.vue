@@ -137,7 +137,7 @@ export default {
         return false
       }
 
-      if (this.validateEmail()) {
+      if (!this.validateEmail()) {
         this.error = 'E-mail inválido'
         return false
       }
@@ -147,7 +147,7 @@ export default {
         return false
       }
 
-      if (await this.validateRA()) {
+      if (!(await this.validateRA())) {
         this.error = 'Registro Acadêmico já cadastrado'
         return false
       }
@@ -157,7 +157,7 @@ export default {
         return false
       }
 
-      if (this.cpf.length != 14) {
+      if (!(await this.validateCPF())) {
         this.error = 'CPF inválido'
         return false
       }
@@ -167,14 +167,25 @@ export default {
     validateEmail() {
       const pattern =
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      return !pattern.test(this.email)
+      return pattern.test(this.email)
     },
     async validateRA() {
       if (!this.isEdit) {
         const students = await StudentService.fetchStudents()
 
-        return !students.map((st) => st.ra).indexOf(Number(this.ra))
+        return students.map((st) => st.ra).indexOf(Number(this.ra))
       }
+
+      return true
+    },
+    async validateCPF() {
+      if (this.cpf.length === 14) {
+        const students = await StudentService.fetchStudents()
+
+        return students.map((st) => st.cpf).indexOf(this.cpf)
+      }
+
+      return false
     },
     clearFields() {
       this.name = ''

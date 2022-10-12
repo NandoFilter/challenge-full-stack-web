@@ -1,28 +1,35 @@
-const mysql = require("mysql2");
+const mysql = require('mysql2')
 
 class Database {
-  conn: any;
+  conn: any
 
   constructor() {
-    this.conn = this.createConnection();
+    this.conn = this.createConnection()
   }
 
   public createConnection() {
-    return mysql.createConnection({
-      host: "localhost",
-      user: "ff",
-      password: "1234",
-      database: "grupo_a",
-    });
+    const host = process.env.DB_HOST
+    const user = process.env.DB_USER
+    const pass = process.env.DB_PASS
+    const name = process.env.DB_NAME
+
+    if (host && user && pass && name) {
+      return mysql.createConnection({
+        host: host,
+        user: user,
+        password: pass,
+        database: name
+      })
+    }
   }
 
   public getConnection() {
-    this.conn = this.createConnection();
+    this.conn = this.createConnection()
 
-    this.conn.connect();
+    this.conn.connect()
 
-    return this.conn;
+    return this.conn
   }
 }
 
-export default new Database();
+export default new Database()
