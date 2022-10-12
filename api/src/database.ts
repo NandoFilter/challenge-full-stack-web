@@ -13,7 +13,7 @@ class Database {
     const pass = process.env.DB_PASS
     const name = process.env.DB_NAME
 
-    if (host && user && pass && name) {
+    if (host && user && name) {
       return mysql.createConnection({
         host: host,
         user: user,
