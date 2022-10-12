@@ -7,8 +7,8 @@
       <div class="list">
         <v-list class="list_content">
           <v-subheader class="list_content_title">Módulo Acadêmico</v-subheader>
-          <v-list-item-group v-model="itemList">
-            <v-list-item class="list_content_item">
+          <v-list-item-group>
+            <v-list-item @click="setSelected" class="list_content_item">
               <v-list-item-icon>
                 <font-awesome-icon icon="fa-solid fa-graduation-cap" />
               </v-list-item-icon>
@@ -24,7 +24,7 @@
       </div>
       <div class="center">
         <p class="center_title">{{ title }}</p>
-        <div class="center_content">
+        <div v-if="selected">
           <StudentQuery
             v-if="inQuery"
             @register="setQuery"
@@ -35,6 +35,13 @@
             :student="student"
             :isEdit="isEdit"
             @cancel="setQuery"
+          />
+        </div>
+        <div v-else class="center_unselected">
+          <img
+            class="center_unselected_img"
+            src="@/assets/logo.png"
+            alt="logo"
           />
         </div>
       </div>
@@ -64,22 +71,27 @@ export default {
   },
   data() {
     return {
+      selected: false,
       inQuery: true,
       isEdit: false,
-      itemList: 0,
       student: Object as unknown as Student
     }
   },
   computed: {
     title(): string {
-      return this.inQuery
-        ? 'Consulta de Alunos'
-        : this.isEdit
-        ? 'Atualização de Aluno'
-        : 'Cadastro de Alunos'
+      return this.selected
+        ? this.inQuery
+          ? 'Consulta de Alunos'
+          : this.isEdit
+          ? 'Atualização de Aluno'
+          : 'Cadastro de Alunos'
+        : 'Selecione um módulo'
     }
   },
   methods: {
+    setSelected() {
+      this.selected = !this.selected
+    },
     setQuery() {
       this.inQuery = !this.inQuery
       this.isEdit = false
@@ -104,11 +116,11 @@ export default {
   flex-direction: column;
 
   margin: 50px;
-  width: 40%;
+  width: 500px;
 }
 
 .header {
-  margin-right: 75%;
+  margin-right: 121%;
   margin-bottom: 10px;
 
   &_logo {
@@ -118,7 +130,6 @@ export default {
 
 .principal {
   display: flex;
-  align-items: left;
   justify-content: left;
 
   border-radius: 10px;
@@ -127,7 +138,7 @@ export default {
 }
 
 .list {
-  width: 25%;
+  width: 182px;
   height: 415px;
 
   border-radius: 10px 0 0 0;
@@ -143,7 +154,6 @@ export default {
       justify-content: center;
 
       margin: 0;
-      padding: 5px;
 
       font-size: 13pt !important;
       font-weight: 600;
@@ -166,7 +176,6 @@ export default {
 .center {
   display: flex;
   align-items: center;
-  justify-content: top;
   flex-direction: column;
 
   width: 600px;
@@ -174,14 +183,29 @@ export default {
   &_title {
     display: flex;
     justify-content: center;
+    align-items: center;
 
     width: 100%;
-    padding: 5px 0;
+    height: 28px;
     margin-bottom: 10px;
 
     border-radius: 0 10px 0 0;
     background-color: #008e9b;
     color: #fff;
+  }
+
+  &_unselected {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    height: 75%;
+
+    &_img {
+      width: 60%;
+      opacity: 25%;
+    }
   }
 }
 
