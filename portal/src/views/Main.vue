@@ -14,7 +14,7 @@
               </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title
-                  selected
+                  class="list_content_item_text"
                   v-text="'Alunos'"
                 ></v-list-item-title>
               </v-list-item-content>
@@ -88,8 +88,8 @@ export default {
       if (student) {
         this.inQuery = !this.inQuery
         this.isEdit = true
-  
-        this.student = student;
+
+        this.student = student
       }
     }
   }
@@ -154,7 +154,11 @@ export default {
     }
 
     &_item:hover {
-      color:#006a74 !important
+      color: #006a74 !important;
+    }
+
+    &_item_text {
+      margin-left: 5px;
     }
   }
 }
@@ -191,6 +195,6 @@ footer {
 }
 
 .link:hover {
-  color: #006a74
+  color: #006a74;
 }
 </style>

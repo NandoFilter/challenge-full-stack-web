@@ -36,10 +36,10 @@
                 >
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="deleteItemConfirm"
+                  <v-btn color="#006a74" text @click="deleteItemConfirm"
                     >Confirmar</v-btn
                   >
-                  <v-btn color="blue darken-1" text @click="closeDelete"
+                  <v-btn color="#006a74" text @click="closeDelete"
                     >Cancelar</v-btn
                   >
                   <v-spacer></v-spacer>
@@ -167,7 +167,7 @@ export default defineComponent({
 }
 
 .delete:hover {
-  color: #ca0000 !important
+  color: #ca0000 !important;
 }
 
 .v-application--wrap {
